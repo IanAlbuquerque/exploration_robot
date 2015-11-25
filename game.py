@@ -15,8 +15,3 @@ class Game:
 
 		self.hero = game_hero
 
-	def moveFront():
-		self.position = self.position + self.direction.toVector()
-
-	def moveBack():
-		self.position = self.position - self.direction.toVector()
