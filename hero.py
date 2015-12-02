@@ -47,3 +47,6 @@ class Hero:
 
 	def getDirection(self):
 		return self.direction
+
+	def copy(self):
+		return Hero(self.position,self.direction)

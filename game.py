@@ -1,6 +1,7 @@
 import hero
 import grid
 import direction
+import action
 
 import skimage.io as skio
 import matplotlib.pyplot as plt
@@ -28,7 +29,6 @@ class Game:
 		hero_direction = self.hero.getDirection()
 
 		hero_next_cell = hero_position + hero_direction.toVector()
-		#print (hero_next_cell.x, hero_next_cell.y)
 
 		hero_color = [1,0,0]
 
@@ -42,7 +42,16 @@ class Game:
 
 		return image
 
-	def doAction(self,action):
-		self.hero.doAction(action)
+	def doAction(self,action_taken):
+		if not isinstance(action_taken,action.Action):
+			raise ValueError("Invalid type for action.")
+
+		hero_next_state = self.hero.copy()
+		hero_next_state.doAction(action_taken)
+
+		hero_next_position = hero_next_state.getPosition()
+
+		if not self.walls.exists(hero_next_position):
+			self.hero = hero_next_state
 		
 
