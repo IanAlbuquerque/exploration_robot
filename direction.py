@@ -13,7 +13,7 @@ class Direction:
 
 		self.direction = initial_direction
 
-	def turnRight():
+	def turnRight(self):
 		if self.direction == self.NORTH:
 			self.direction = self.EAST
 		elif self.direction == self.EAST:
@@ -23,7 +23,7 @@ class Direction:
 		elif self.direction == self.WEST:
 			self.direction = self.NORTH
 
-	def turnLeft():
+	def turnLeft(self):
 		if self.direction == self.NORTH:
 			self.direction = self.WEST
 		elif self.direction == self.EAST:
@@ -33,7 +33,7 @@ class Direction:
 		elif self.direction == self.WEST:
 			self.direction = self.SOUTH
 
-	def toVector():
+	def toVector(self):
 		if self.direction == self.NORTH:
 			return vector.Vector((-1,0))
 		elif self.direction == self.EAST:
