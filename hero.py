@@ -50,3 +50,9 @@ class Hero:
 
 	def copy(self):
 		return Hero(self.position,self.direction)
+
+	def __eq__(self, other):
+		if not isinstance(other,Hero):
+			raise ValueError("Heroes can only be compared with heroes.")
+
+		return self.position == other.position and self.direction == other.direction

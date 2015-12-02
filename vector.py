@@ -53,7 +53,16 @@ class Vector:
 	def __rmul__(self,other):
 		return self.__mul__(other)
 
+	def __eq__(self, other):
+		if not isinstance(other,Vector):
+			raise ValueError("Vectors can only be compared with vectors.")
+
+		return self.x == other.x and self.y == other.y
+
 	def isInRange(self,y_min,y_max,x_min,x_max):
 		return self.x >= x_min and self.x < x_max and self.y >= y_min and self.y < y_max
+
+	def toTuple(self):
+		return (self.y, self.x)
 
 

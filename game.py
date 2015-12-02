@@ -50,17 +50,23 @@ class Game:
 
 		return image
 
-	def doAction(self,action_taken):
+	def transitionModel(self,hero_state,action_taken):
+		if not isinstance(hero_state,hero.Hero):
+			raise ValueError("Invalid hero state.")
 		if action_taken not in action.ACTIONS:
 			raise ValueError("Invalid action.")
 
-		hero_next_state = self.hero.copy()
+		hero_next_state = hero_state.copy()
 		hero_next_state.doAction(action_taken)
 
 		hero_next_position = hero_next_state.getPosition()
 
 		if not self.walls.exists(hero_next_position):
-			self.hero = hero_next_state
+			return hero_next_state
+		return hero_state
+
+	def doAction(self,action_taken):
+		self.hero = self.transitionModel(self.hero,action_taken)
 
 	def readSensors(self):
 		hero_position = self.hero.getPosition()
@@ -91,6 +97,12 @@ class Game:
 			return False
 		else:
 			return self.goal_position == self.hero.getPosition()
+
+	def getGoalPosition(self):
+		return self.goal_position
+
+	def getHero(self):
+		return self.hero
 
 
 		
