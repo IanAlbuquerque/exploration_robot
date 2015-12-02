@@ -1,4 +1,6 @@
 import numpy as np
+import skimage.io as skio
+import matplotlib.pyplot as plt
 
 class Grid:
 
@@ -42,3 +44,8 @@ class Grid:
 		new_grid[1:1+self.shape[0],1:1+self.shape[0]] = self.grid
 		self.grid = new_grid
 		self.shape = new_shape
+
+	def plot(self):
+		figure, axe = plt.subplots(ncols=1)
+		axe.imshow(np.dstack([self.grid,self.grid,self.grid]), vmin=0, vmax=1, interpolation="nearest", zorder=0)
+		plt.show()
