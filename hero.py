@@ -1,20 +1,21 @@
 import vector
 import action
+import direction
 
 class Hero:
 
-	def __init__(self, position, direction):
+	def __init__(self, hero_position, hero_direction):
 
-		if type(position) != vector.Vector:
+		if not isinstance(hero_position,vector.Vector):
 			raise ValueError("Invalid type for hero position.")
-		if type(direction) != vector.Vector:
+		if not isinstance(hero_direction,direction.Direction):
 			raise ValueError("Invalid type for hero direction.")
 
-		self.position = position
-		self.direction = direction
+		self.position = hero_position
+		self.direction = hero_direction
 
 	def doAction(self, action):
-		if type(action) != action.Action:
+		if not isinstance(action,action.Action):
 			raise ValueError("Invalid type for action.")
 
 		if action == action.FOWARD:
@@ -40,3 +41,9 @@ class Hero:
 
 	def isInRange(self,y_min,y_max,x_min,x_max):
 		return self.position.isInRange(y_min,y_max,x_min,x_max)
+
+	def getPosition(self):
+		return self.position
+
+	def getDirection(self):
+		return self.direction

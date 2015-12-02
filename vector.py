@@ -8,10 +8,10 @@ class Vector:
 		self.x = value[1]
 
 	def __add__(self,other):
-		if type(other) == Vector:
+		if isinstance(other,Vector):
 			self.y += other.y
 			self.x += other.x
-		elif type(other) == Vector:
+		elif type(other) == tuple:
 			if len(other) != 2:
 				raise ValueError("Vectors can only be added with tuples with 2 values.")
 			self.y += other[0]
@@ -23,10 +23,10 @@ class Vector:
 		self.__add__(other)
 
 	def __sub__(self,other):
-		if type(other) == Vector:
+		if isinstance(other,Vector):
 			self.y -= other.y
 			self.x -= other.x
-		elif type(other) == Vector:
+		elif type(other) == tuple:
 			if len(other) != 2:
 				raise ValueError("Vectors can only be subtracted with tuples with 2 values.")
 			self.y -= other[0]

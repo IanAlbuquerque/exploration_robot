@@ -45,7 +45,8 @@ class Grid:
 		self.grid = new_grid
 		self.shape = new_shape
 
-	def plot(self):
-		figure, axe = plt.subplots(ncols=1)
-		axe.imshow(np.dstack([self.grid,self.grid,self.grid]), vmin=0, vmax=1, interpolation="nearest", zorder=0)
-		plt.show()
+	def toImage(self):
+		return np.dstack([self.grid,self.grid,self.grid])
+
+	def getGrid(self):
+		return self.grid
