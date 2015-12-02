@@ -2,13 +2,14 @@ import hero
 import grid
 import direction
 import action
+import vector
 
 import skimage.io as skio
 import matplotlib.pyplot as plt
 
 class Game:
 
-	def __init__(self, walls_grid, game_hero):
+	def __init__(self, walls_grid, game_hero, game_goal_position = None):
 
 		if not isinstance(walls_grid,grid.Grid):
 			raise ValueError("Invalid type for game grid.")
@@ -18,8 +19,13 @@ class Game:
 		if not game_hero.isInRange(0,walls_grid.shape[0],0,walls_grid.shape[1]):
 			raise ValueError("Game hero out of the bounds of the grid.")
 
+		if game_goal_position != None:
+			if not isinstance(game_goal_position,vector.Vector):
+				raise ValueError("Invalid type for goal position")
+
 		self.hero = game_hero
 		self.walls = walls_grid
+		self.goal_position = game_goal_position
 
 	def toImage(self):
 		image = self.walls.toImage()
@@ -38,6 +44,9 @@ class Game:
 
 		image[hero_position.y,hero_position.x] = hero_color
 		image[hero_next_cell.y,hero_next_cell.x] = hero_facing_color
+
+		if self.goal_position != None:
+			image[self.goal_position.y,self.goal_position.x] = [0.8,0.4,0.1]
 
 		return image
 
@@ -76,6 +85,12 @@ class Game:
 			hero_readings_referenced_game[true_direction] = hero_readings_referenced_hero[direct]
 
 		return hero_readings_referenced_game
+
+	def isInGoal(self):
+		if self.goal_position == None:
+			return False
+		else:
+			return self.goal_position == self.hero.getPosition()
 
 
 		

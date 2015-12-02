@@ -18,3 +18,4 @@ def doActions(game,actions,timestep_in_seconds=0.001,show_results=True):
 		time.sleep(timestep_in_seconds)
 
 	return game
+	

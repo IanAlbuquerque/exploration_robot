@@ -25,10 +25,11 @@ if __name__ == '__main__':
 
 	hero_starting_position = vector.Vector((1,1))
 	hero_starting_direction = direction.NORTH
+	goal_position = vector.Vector((29,29))
 
 	my_hero = hero.Hero(hero_starting_position,hero_starting_direction)
 
-	my_game = game.Game(walls_grid,my_hero)
+	my_game = game.Game(walls_grid,my_hero,goal_position)
 
 	game_image = my_game.toImage()
 	images.plotImage(game_image,True)

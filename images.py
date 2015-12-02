@@ -19,3 +19,4 @@ def readImage(image_path):
 	img = skio.imread(image_path)
 	float_img = img_as_float(img)
 	return float_img
+	
