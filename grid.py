@@ -50,3 +50,6 @@ class Grid:
 
 	def getGrid(self):
 		return self.grid
+
+	def exists(self,vector):
+		return self.grid[vector.y,vector.x] == self.EXIST

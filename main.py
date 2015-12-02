@@ -19,8 +19,8 @@ if __name__ == '__main__':
 	#grid_image = walls_grid.toImage()
 	#images.plotImage(grid_image)
 
-	hero_starting_position = vector.Vector((0,0))
-	hero_starting_direction = direction.WEST
+	hero_starting_position = vector.Vector((1,1))
+	hero_starting_direction = direction.NORTH
 
 	my_hero = hero.Hero(hero_starting_position,hero_starting_direction)
 
