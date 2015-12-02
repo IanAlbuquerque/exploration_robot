@@ -6,7 +6,7 @@ import game
 import hero
 import vector
 import direction
-import viewer
+import simple_exe
 import action
 
 F, B, L, R = action.FOWARD, action.BACKWARD, action.LEFT, action.RIGHT
@@ -34,7 +34,7 @@ if __name__ == '__main__':
 	images.plotImage(game_image,True)
 
 	actions = [R,F,R,F,R,F,R,F,R,F,F,F,F,F,F,F,F,F,F,F,F,F,F,F,F,F,R,F,F,F,F,F,F,F,F,F,F,L,L,F,F,F,B,B,B,L,F,F,F,F,F,F,F,F,F,F,F]
-	viewer.viewActions(my_game,actions,0.2)
+	simple_exe.doActions(my_game,actions,0.01,True)
 
 	game_image = my_game.toImage()
 	images.plotImage(game_image,True)
