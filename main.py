@@ -33,7 +33,7 @@ if __name__ == '__main__':
 	game_image = my_game.toImage()
 	images.plotImage(game_image,True)
 
-	actions = [R,F,F,F,F,R,F,F,L,F,F,B,B,L,F,F,F,F,F,F,F,F,F,F,F,F,F,R,F,F,F,F,F,F,F,R,R,R,R]
+	actions = [R,F,R,F,R,F,R,F,R,F,F,F,F,F,F,F,F,F,F,F,F,F,F,F,F,F,R,F,F,F,F,F,F,F,F,F,F,L,L,F,F,F,B,B,B,L,F,F,F,F,F,F,F,F,F,F,F]
 	viewer.viewActions(my_game,actions,0.2)
 
 	game_image = my_game.toImage()

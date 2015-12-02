@@ -53,14 +53,30 @@ class Game:
 		if not self.walls.exists(hero_next_position):
 			self.hero = hero_next_state
 
-	"""
 	def readSensors(self):
 		hero_position = self.hero.getPosition()
+		hero_direction = self.hero.getDirection()
 
-		readings_hero_referenced = {}
+		# -------
+		# Read the sensors in the hero referential
+		hero_readings_referenced_hero = {}
 		for direct in direction.DIRECTIONS:
-			true_direction = direc
-	"""
+			true_direction = direction.changeReferential(direct,hero_direction)
+
+			position_to_check = hero_position + direction.toVector(true_direction)
+			if self.walls.exists(position_to_check):
+				hero_readings_referenced_hero[direct] = True
+			else:
+				hero_readings_referenced_hero[direct] = False
+		# -------
+
+		hero_readings_referenced_game = {}
+		for direct in hero_readings_referenced_hero:
+			true_direction = direction.changeReferential(direct,hero_direction)
+			hero_readings_referenced_game[true_direction] = hero_readings_referenced_hero[direct]
+
+		return hero_readings_referenced_game
+
 
 		
 
