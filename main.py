@@ -6,18 +6,22 @@ import game
 import hero
 import vector
 import direction
+import viewer
+import action
+
+F, B, L, R = action.FOWARD, action.BACKWARD, action.LEFT, action.RIGHT
 
 if __name__ == '__main__':
 	img = images.readImage("map.jpg")
 	walls_grid = grid.Grid((30,30),img)
 
 	#grid_image = walls_grid.toImage()
-	#images.plotImage(grid_image)
+	#images.plotImage(grid_image,True)
 
 	walls_grid.growBorders()
 
 	#grid_image = walls_grid.toImage()
-	#images.plotImage(grid_image)
+	#images.plotImage(grid_image,True)
 
 	hero_starting_position = vector.Vector((1,1))
 	hero_starting_direction = direction.NORTH
@@ -27,4 +31,11 @@ if __name__ == '__main__':
 	my_game = game.Game(walls_grid,my_hero)
 
 	game_image = my_game.toImage()
-	images.plotImage(game_image)
+	images.plotImage(game_image,True)
+
+	actions = [R,F,F,F,F,R,F,F,L,F,F,B,B]
+	viewer.viewActions(my_game,actions,0.2)
+	
+	game_image = my_game.toImage()
+	images.plotImage(game_image,True)
+
