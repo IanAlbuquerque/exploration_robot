@@ -56,3 +56,9 @@ class Hero:
 			raise ValueError("Heroes can only be compared with heroes.")
 
 		return self.position == other.position and self.direction == other.direction
+
+	def __ne__(self, other):
+		return not self.__eq__(other)
+
+	def toTuple(self):
+		return (self.position.y,self.position.x,self.direction)

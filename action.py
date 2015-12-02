@@ -1,5 +1,11 @@
+NUMBER_OF_DIRECTIONS = 4
 FOWARD = 0
-BACKWARD = 1
-LEFT = 2
-RIGHT = 3
-ACTIONS = [FOWARD,BACKWARD,LEFT,RIGHT]
+RIGHT = 1
+BACKWARD = 2
+LEFT = 3
+ACTIONS = [FOWARD,RIGHT,BACKWARD,LEFT]
+
+def reverse(action):
+	if action not in ACTIONS:
+		raise ValueError("Action given does not exist.")
+	return (action + 2) % NUMBER_OF_DIRECTIONS

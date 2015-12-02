@@ -63,7 +63,7 @@ class Game:
 
 		if not self.walls.exists(hero_next_position):
 			return hero_next_state
-		return hero_state
+		return hero_state.copy()
 
 	def doAction(self,action_taken):
 		self.hero = self.transitionModel(self.hero,action_taken)
