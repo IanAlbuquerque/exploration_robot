@@ -21,14 +21,13 @@ class Game:
 		self.hero = game_hero
 		self.walls = walls_grid
 
-
 	def toImage(self):
 		image = self.walls.toImage()
 
 		hero_position = self.hero.getPosition()
 		hero_direction = self.hero.getDirection()
 
-		hero_next_cell = hero_position + hero_direction.toVector()
+		hero_next_cell = hero_position + direction.toVector(hero_direction)
 
 		hero_color = [1,0,0]
 
@@ -43,8 +42,8 @@ class Game:
 		return image
 
 	def doAction(self,action_taken):
-		if not isinstance(action_taken,action.Action):
-			raise ValueError("Invalid type for action.")
+		if action_taken not in action.ACTIONS:
+			raise ValueError("Invalid action.")
 
 		hero_next_state = self.hero.copy()
 		hero_next_state.doAction(action_taken)
@@ -53,5 +52,15 @@ class Game:
 
 		if not self.walls.exists(hero_next_position):
 			self.hero = hero_next_state
+
+	"""
+	def readSensors(self):
+		hero_position = self.hero.getPosition()
+
+		readings_hero_referenced = {}
+		for direct in direction.DIRECTIONS:
+			true_direction = direc
+	"""
+
 		
 

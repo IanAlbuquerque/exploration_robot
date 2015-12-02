@@ -8,15 +8,15 @@ class Hero:
 
 		if not isinstance(hero_position,vector.Vector):
 			raise ValueError("Invalid type for hero position.")
-		if not isinstance(hero_direction,direction.Direction):
-			raise ValueError("Invalid type for hero direction.")
+		if hero_direction not in direction.DIRECTIONS:
+			raise ValueError("Invalid hero direction")
 
 		self.position = hero_position
 		self.direction = hero_direction
 
 	def doAction(self, action_taken):
-		if not isinstance(action_taken,action.Action):
-			raise ValueError("Invalid type for action.")
+		if action_taken not in action.ACTIONS:
+			raise ValueError("Invalid action.")
 
 		if action_taken == action.FOWARD:
 			self.moveFoward()
@@ -28,16 +28,16 @@ class Hero:
 			self.turnRight()
 
 	def moveFoward(self):
-		self.position = self.position + self.direction.toVector()
+		self.position = self.position + direction.toVector(self.direction)
 
 	def moveBackwards(self):
-		self.position = self.position - self.direction.toVector()
+		self.position = self.position - direction.toVector(self.direction)
 
 	def turnLeft(self):
-		self.direction.turnLeft()
+		self.direction = direction.turnLeft(self.direction)
 
 	def turnRight(self):
-		self.direction.turnRight()
+		self.direction = direction.turnRight(self.direction)
 
 	def isInRange(self,y_min,y_max,x_min,x_max):
 		return self.position.isInRange(y_min,y_max,x_min,x_max)
