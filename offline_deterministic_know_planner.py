@@ -47,8 +47,8 @@ def solveGameGradientDescending(game_to_solve,max_steps = 1000):
 		actions_to_take.append(best_action)
 
 		print "--"
-		print goal_position.toTuple()
-		print hero_state.getPosition().toTuple()
+		print goal_position
+		print hero_state.getPosition()
 
 		if goal_position == hero_state.getPosition() or steps > max_steps:
 			break
@@ -67,47 +67,50 @@ def solveAStar(game_to_solve):
 	hero_start_state = game_to_solve.getHero().copy()
 
 	heap = [(heuristic(game_to_solve,hero_start_state),hero_start_state,None,None)]
+
+	HEAP_HEURISTIC = 0
+	HEAP_STATE = 1
+	HEAP_ACTION_TAKEN_THERE = 2
+	HEAP_FATHER_STATE = 3
+
 	visited = []
 	recover_map = {}
 
+	RECOVER_ACTION = 0
+	RECOVER_FATHER = 1
+
+	ACTIONS_COST = 1
+
 	while True:
-		#print "----"
-		#print heap
-		#print visited
-		v = heapq.heappop(heap)
-		while v[1].toTuple() in visited:
+		heap_element = heapq.heappop(heap)
+		while heap_element[HEAP_STATE] in visited:
 			if len(heap) == 0:
 				return []
-			v = heapq.heappop(heap)
-		visited.append(v[1].toTuple())
-		recover_map[v[1].toTuple()] = (v[2], v[3])
+			heap_element = heapq.heappop(heap)
+		visited.append(heap_element[HEAP_STATE])
+		recover_map[heap_element[HEAP_STATE]] = (heap_element[HEAP_ACTION_TAKEN_THERE], heap_element[HEAP_FATHER_STATE])
 
-		#print v[1].toTuple()
+		if goal_position == heap_element[HEAP_STATE].getPosition():
+			recover_map[hero_start_state] = None
 
-		if goal_position == v[1].getPosition():
-			recover_map[hero_start_state.toTuple()] = None
 			actions = []
 
-			state_tuple = v[1].toTuple()
+			state_tuple = heap_element[HEAP_STATE]
 			recover = recover_map[state_tuple]
+
 			while recover != None:
-				#time.sleep(1)
-				#print "a"
-				actions.append(recover[0])
-				new_state = recover[1]
-				state_tuple = new_state.toTuple()
-				#print state_tuple
+				actions.append(recover[RECOVER_ACTION])
+				new_state = recover[RECOVER_FATHER]
+				state_tuple = new_state
 				recover = recover_map[state_tuple]
+
 			actions.reverse()
 			return actions
 
-		#print "Actions-----------------------"
 
 		actions_possible = action.ACTIONS
 		for act in actions_possible:
-			c = game_to_solve.transitionModel(v[1], act)
-			#print c.toTuple()
-			cost = 1	   
-			heapq.heappush(heap, (v[0] + cost + heuristic(game_to_solve,c) - heuristic(game_to_solve,v[1]), c, act, v[1]))
+			next_state = game_to_solve.transitionModel(heap_element[HEAP_STATE], act)   
+			heapq.heappush(heap, (heap_element[0] + ACTIONS_COST + heuristic(game_to_solve,next_state) - heuristic(game_to_solve,heap_element[HEAP_STATE]), next_state, act, heap_element[HEAP_STATE]))
 
 

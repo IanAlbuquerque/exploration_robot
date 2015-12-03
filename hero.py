@@ -60,5 +60,5 @@ class Hero:
 	def __ne__(self, other):
 		return not self.__eq__(other)
 
-	def toTuple(self):
-		return (self.position.y,self.position.x,self.direction)
+	def __hash__(self):
+		return hash((self.position.y,self.position.x,self.direction))
