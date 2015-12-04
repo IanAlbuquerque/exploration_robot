@@ -1,6 +1,7 @@
 import numpy as np
 import skimage.io as skio
 import matplotlib.pyplot as plt
+import vector
 
 class Grid:
 
@@ -53,3 +54,43 @@ class Grid:
 
 	def exists(self,vector):
 		return self.grid[vector.y,vector.x] == self.EXIST
+
+	def toList(self,check_for_existance=True):
+		if check_for_existance:
+			value_to_check = self.EXIST
+		else:
+			value_to_check = self.NOT_EXIST
+		list_of_elements = []
+		for y in xrange(self.grid.shape[0]):
+			for x in xrange(self.grid.shape[1]):
+				if self.grid[y,x] == value_to_check:
+					list_of_elements.append((y,x))
+		return list_of_elements
+
+	def setValue(self, position, value=True):
+		if not isinstance(position,vector.Vector):
+			raise ValueError("Position is not a Vector.")
+
+		if value:
+			value_add = self.EXIST
+		else:
+			value_add = self.NOT_EXIST
+
+		self.grid[position.y,position.x] = value_add
+
+	def copy(self):
+		copy_grid = Grid(self.shape,image=None)
+		copy_grid.grid = np.copy(self.grid)
+		return copy_grid
+
+	def overlap(self,grid):
+		if not isinstance(grid,Grid):
+			raise ValueError("It is only possible to overlap grids with grids.")
+
+		if self.shape != grid.shape:
+			raise ValueError("Invalid shapes for grid overlaping.")
+
+		self.grid *= grid.grid
+
+
+

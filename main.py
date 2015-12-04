@@ -13,16 +13,18 @@ import offline_deterministic_know_planner
 F, B, L, R = action.FOWARD, action.BACKWARD, action.LEFT, action.RIGHT
 
 if __name__ == '__main__':
-	img = images.readImage("maze.jpg")
+	img = images.readImage("easy_map.jpg")
 	MAZE_SIZE_Y = 30
 	MAZE_SIZE_X = 30
 
 	walls_grid = grid.Grid((MAZE_SIZE_Y,MAZE_SIZE_X),img)
+	known_grid = grid.Grid(walls_grid.shape)
 
 	#grid_image = walls_grid.toImage()
 	#images.plotImage(grid_image,True)
 
 	walls_grid.growBorders()
+	known_grid.growBorders()
 
 	#grid_image = walls_grid.toImage()
 	#images.plotImage(grid_image,True)
@@ -33,7 +35,7 @@ if __name__ == '__main__':
 
 	my_hero = hero.Hero(hero_starting_position,hero_starting_direction)
 
-	my_game = game.Game(walls_grid,my_hero,goal_position)
+	my_game = game.Game(walls_grid,my_hero,goal_position,known_grid)
 
 	game_image = my_game.toImage()
 	images.plotImage(game_image,True)

@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 class Game:
 
-	def __init__(self, walls_grid, game_hero, game_goal_position = None):
+	def __init__(self, walls_grid, game_hero, game_goal_position, game_known_maze):
 
 		if not isinstance(walls_grid,grid.Grid):
 			raise ValueError("Invalid type for game grid.")
@@ -26,6 +26,11 @@ class Game:
 		self.hero = game_hero
 		self.walls = walls_grid
 		self.goal_position = game_goal_position
+		self.known_cells = game_known_maze
+
+		self.known_maze = self.walls.copy()
+		self.known_maze.overlap(self.known_cells)
+		#print self.known_maze.grid
 
 	def toImage(self):
 		image = self.walls.toImage()
@@ -45,6 +50,12 @@ class Game:
 		image[hero_position.y,hero_position.x] = hero_color
 		image[hero_next_cell.y,hero_next_cell.x] = hero_facing_color
 
+		list_not_known_positions = self.known_cells.toList(False)
+
+		for y,x in list_not_known_positions:
+			image[y,x][2] += 1
+			image[y,x] /= 2.0
+
 		if self.goal_position != None:
 			image[self.goal_position.y,self.goal_position.x] = [0.8,0.4,0.1]
 
@@ -61,12 +72,26 @@ class Game:
 
 		hero_next_position = hero_next_state.getPosition()
 
-		if not self.walls.exists(hero_next_position):
+		if not self.known_maze.exists(hero_next_position):
 			return hero_next_state
 		return hero_state.copy()
 
 	def doAction(self,action_taken):
-		self.hero = self.transitionModel(self.hero,action_taken)
+		if not isinstance(self.hero,hero.Hero):
+			raise ValueError("Invalid hero state.")
+		if action_taken not in action.ACTIONS:
+			raise ValueError("Invalid action.")
+
+		hero_next_state = self.hero.copy()
+		hero_next_state.doAction(action_taken)
+
+		hero_next_position = hero_next_state.getPosition()
+
+		if not self.walls.exists(hero_next_position):
+			self.hero = hero_next_state
+			return True
+		else:
+			return False
 
 	def readSensors(self):
 		hero_position = self.hero.getPosition()
@@ -103,6 +128,19 @@ class Game:
 
 	def getHero(self):
 		return self.hero
+
+	def ackSensor(self,sensor_readings):
+		hero_position = self.hero.getPosition()
+
+		true_readings = {}
+		for sensor_direction in sensor_readings:
+			true_direction = direction.changeReferential(sensor_direction,direction.NORTH)
+			true_readings[true_direction] = sensor_readings[sensor_direction]
+
+		for direc in true_readings:
+			position_to_ack = hero_position + direction.toVector(direc)
+			self.known_cells.setValue(position_to_ack,True)
+			self.known_maze.setValue(position_to_ack,true_readings[direc])
 
 
 		
