@@ -9,6 +9,7 @@ import direction
 import simple_exe
 import action
 import offline_deterministic_know_planner
+import astar_recalc_exe
 
 F, B, L, R = action.FOWARD, action.BACKWARD, action.LEFT, action.RIGHT
 
@@ -42,9 +43,11 @@ if __name__ == '__main__':
 
 	#actions = [R,F,R,F,R,F,R,F,R,F,F,F,F,F,F,F,F,F,F,F,F,F,F,F,F,F,R,F,F,F,F,F,F,F,F,F,F,L,L,F,F,F,B,B,B,L,F,F,F,F,F,F,F,F,F,F,F]
 	#actions = offline_deterministic_know_planner.solveGameGradientDescending(my_game)
-	actions = offline_deterministic_know_planner.solveAStar(my_game)
-	print actions
-	simple_exe.doActions(my_game,actions,0.5,True)
+	
+	#actions = offline_deterministic_know_planner.solveAStar(my_game)
+	#simple_exe.doActions(my_game,actions,0.5,True)
+
+	astar_recalc_exe.run(my_game,0.5,True)
 
 	game_image = my_game.toImage()
 	images.plotImage(game_image,True)
