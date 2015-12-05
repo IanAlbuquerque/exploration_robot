@@ -3,6 +3,7 @@ import grid
 import direction
 import action
 import vector
+import zumy_interface
 
 import skimage.io as skio
 import matplotlib.pyplot as plt
@@ -76,7 +77,7 @@ class Game:
 			return hero_next_state
 		return hero_state.copy()
 
-	def doAction(self,action_taken):
+	def canDoAction(self,action_taken):
 		if not isinstance(self.hero,hero.Hero):
 			raise ValueError("Invalid hero state.")
 		if action_taken not in action.ACTIONS:
@@ -88,10 +89,24 @@ class Game:
 		hero_next_position = hero_next_state.getPosition()
 
 		if not self.walls.exists(hero_next_position):
-			self.hero = hero_next_state
 			return True
 		else:
 			return False
+
+	def doAction(self,action_taken):
+		# if not isinstance(self.hero,hero.Hero):
+		# 	raise ValueError("Invalid hero state.")
+		# if action_taken not in action.ACTIONS:
+		# 	raise ValueError("Invalid action.")
+
+		# hero_next_state = self.hero.copy()
+		# hero_next_state.doAction(action_taken)
+
+		# hero_next_position = hero_next_state.getPosition()
+
+		# if not self.walls.exists(hero_next_position):
+		# 	self.hero = hero_next_state
+		zumy_interface.doAction(self,action_taken)
 
 	def readSensors(self):
 		hero_position = self.hero.getPosition()
@@ -99,16 +114,20 @@ class Game:
 
 		# -------
 		# Read the sensors in the hero referential
-		hero_readings_referenced_hero = {}
-		for direct in direction.DIRECTIONS:
-			true_direction = direction.changeReferential(direct,hero_direction)
 
-			position_to_check = hero_position + direction.toVector(true_direction)
-			if self.walls.exists(position_to_check):
-				hero_readings_referenced_hero[direct] = True
-			else:
-				hero_readings_referenced_hero[direct] = False
+		# hero_readings_referenced_hero = {}
+		# for direct in direction.DIRECTIONS:
+		# 	true_direction = direction.changeReferential(direct,hero_direction)
+
+		# 	position_to_check = hero_position + direction.toVector(true_direction)
+		# 	if self.walls.exists(position_to_check):
+		# 		hero_readings_referenced_hero[direct] = True
+		# 	else:
+		# 		hero_readings_referenced_hero[direct] = False
+
 		# -------
+
+		hero_readings_referenced_hero = zumy_interface.readSensors(self)
 
 		hero_readings_referenced_game = {}
 		for direct in hero_readings_referenced_hero:

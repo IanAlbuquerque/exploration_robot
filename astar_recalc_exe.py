@@ -17,17 +17,18 @@ def run(game,timestep_in_seconds=0.001,show_results=True):
 		redo_loop = False
 
 		for action in actions:
-			did_work = game.doAction(action)
+			if game.canDoAction(action):
+				game.doAction(action)
 
-			sensor_readings = game.readSensors()
-			game.ackSensor(sensor_readings)
+				sensor_readings = game.readSensors()
+				game.ackSensor(sensor_readings)
 
-			if show_results:
-				print sensor_readings
-				game_image = game.toImage()
-				images.plotImage(game_image,False)
+				if show_results:
+					print sensor_readings
+					game_image = game.toImage()
+					images.plotImage(game_image,False)
 
-			if not did_work:
+			else:
 				redo_loop = True
 				actions = offline_deterministic_know_planner.solveAStar(game)
 				print actions
