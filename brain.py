@@ -11,8 +11,10 @@ import action
 import offline_deterministic_know_planner
 import astar_recalc_exe
 
+MAP_FILE_NAME = "maps/map.jpg"
+
 def createGame():
-	img = images.readImage("maps/maze.jpg")
+	img = images.readImage(MAP_FILE_NAME)
 	MAZE_SIZE_Y = 30
 	MAZE_SIZE_X = 30
 
@@ -36,7 +38,7 @@ def solveGame(game_to_solve):
 	game_image = game_to_solve.toImage()
 	images.plotImage(game_image,True)
 
-	astar_recalc_exe.run(game_to_solve,0.05,True)
+	astar_recalc_exe.run(game_to_solve,0.01,True)
 
 	game_image = game_to_solve.toImage()
 	images.plotImage(game_image,True)
