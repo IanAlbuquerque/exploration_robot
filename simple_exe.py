@@ -1,5 +1,6 @@
 import time
 import images
+import matplotlib.pyplot as plt
 
 def doActions(game,actions,timestep_in_seconds=0.001,show_results=True):
 
@@ -16,9 +17,9 @@ def doActions(game,actions,timestep_in_seconds=0.001,show_results=True):
 		if show_results:
 			print sensor_readings
 			game_image = game.toImage()
-			images.plotImage(game_image,False)
+			images.updateLastPlot(game_image)
 
-		time.sleep(timestep_in_seconds)
+		plt.pause(timestep_in_seconds)
 
 	return game
 	

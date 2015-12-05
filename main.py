@@ -14,7 +14,7 @@ import astar_recalc_exe
 F, B, L, R = action.FOWARD, action.BACKWARD, action.LEFT, action.RIGHT
 
 if __name__ == '__main__':
-	img = images.readImage("maze.jpg")
+	img = images.readImage("maps/maze.jpg")
 	MAZE_SIZE_Y = 30
 	MAZE_SIZE_X = 30
 
@@ -47,7 +47,7 @@ if __name__ == '__main__':
 	#actions = offline_deterministic_know_planner.solveAStar(my_game)
 	#simple_exe.doActions(my_game,actions,0.5,True)
 
-	astar_recalc_exe.run(my_game,0.01,True)
+	astar_recalc_exe.run(my_game,0.05,True)
 
 	game_image = my_game.toImage()
 	images.plotImage(game_image,True)

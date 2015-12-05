@@ -1,6 +1,6 @@
-import time
 import images
 import offline_deterministic_know_planner
+import matplotlib.pyplot as plt
 
 def run(game,timestep_in_seconds=0.001,show_results=True):
 
@@ -26,7 +26,7 @@ def run(game,timestep_in_seconds=0.001,show_results=True):
 				if show_results:
 					print sensor_readings
 					game_image = game.toImage()
-					images.plotImage(game_image,False)
+					images.updateLastPlot(game_image)
 
 			else:
 				redo_loop = True
@@ -34,7 +34,7 @@ def run(game,timestep_in_seconds=0.001,show_results=True):
 				print actions
 				break
 
-			time.sleep(timestep_in_seconds)
+			plt.pause(timestep_in_seconds)
 
 	return game
 	
