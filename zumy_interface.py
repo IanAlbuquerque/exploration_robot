@@ -1,5 +1,6 @@
 import direction
 import action
+import random
 
 def doAction(game, action_taken):
 
@@ -86,3 +87,17 @@ def readSensors(game):
 	for direct in direction.DIRECTIONS:
 		sensor_readings[direct] = readSensor(game,direct)
 	return sensor_readings
+
+def getZumyPositionCamera(game):
+	if random.random() < 0.2:
+		candidate_positions = []
+		for direct in direction.DIRECTIONS:
+			new_position = game.getHero().getPosition() + direction.toVector(direct)
+			if not game.walls.exists(new_position):
+				candidate_positions.append(new_position)
+		if len(candidate_positions)!= 0:
+			return random.choice(candidate_positions)
+		else:
+			return game.getHero().getPosition()
+	else:
+		return game.getHero().getPosition()

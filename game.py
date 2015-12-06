@@ -77,6 +77,19 @@ class Game:
 			return hero_next_state
 		return hero_state.copy()
 
+	def thinkThatCanDoActions(self,list_of_actions):
+		hero_next_state = self.hero.copy()
+
+		for action_taken in list_of_actions:
+			hero_next_state.doAction(action_taken)
+
+			hero_next_position = hero_next_state.getPosition()
+
+			if self.known_maze.exists(hero_next_position):
+				return False
+		return True
+
+
 	def canDoAction(self,action_taken):
 		if not isinstance(self.hero,hero.Hero):
 			raise ValueError("Invalid hero state.")
@@ -160,6 +173,13 @@ class Game:
 			position_to_ack = hero_position + direction.toVector(direc)
 			self.known_cells.setValue(position_to_ack,True)
 			self.known_maze.setValue(position_to_ack,true_readings[direc])
+
+	def setHeroPosition(self,new_hero_position):
+		if not isinstance(new_hero_position,vector.Vector):
+			raise ValueError("Invalid hero position to be set.")
+
+		self.hero.position = new_hero_position
+
 
 
 		

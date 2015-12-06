@@ -10,6 +10,7 @@ import simple_exe
 import action
 import offline_deterministic_know_planner
 import astar_recalc_exe
+import camera_astar_exe
 
 MAP_FILE_NAME = "maps/map.jpg"
 
@@ -38,7 +39,8 @@ def solveGame(game_to_solve):
 	game_image = game_to_solve.toImage()
 	images.plotImage(game_image,True)
 
-	astar_recalc_exe.run(game_to_solve,0.01,True)
+	#astar_recalc_exe.run(game_to_solve,0.01,True)
+	camera_astar_exe.run(game_to_solve,0.01,True)
 
 	game_image = game_to_solve.toImage()
 	images.plotImage(game_image,True)
