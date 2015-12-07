@@ -89,7 +89,7 @@ def readSensors(game):
 	return sensor_readings
 
 def getZumyPositionCamera(game):
-	PROBABILITY_TO_GET_DIFFERENT_READING = 0.1
+	PROBABILITY_TO_GET_DIFFERENT_READING = 0.25
 	if random.random() < PROBABILITY_TO_GET_DIFFERENT_READING:
 		candidate_positions = []
 		for direct in direction.DIRECTIONS:
